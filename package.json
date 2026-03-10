@@ -1,5 +1,5 @@
 {
-  "name": "request-modern",
+  "name": "@sabaoongfx/request-modern",
   "description": "Simplified HTTP request client - modernized fork of request.",
   "keywords": [
     "http",
