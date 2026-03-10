@@ -1,34 +1,57 @@
-# Deprecated!
+# request-modern - Simplified HTTP client
 
-As of Feb 11th 2020, request is fully deprecated. No new changes are expected to land. In fact, none have landed for some time.
+[![npm version](https://img.shields.io/npm/v/request-modern.svg?style=flat-square)](https://www.npmjs.com/package/request-modern)
+[![npm downloads](https://img.shields.io/npm/dm/request-modern.svg?style=flat-square)](https://www.npmjs.com/package/request-modern)
 
-For more information about why request is deprecated and possible alternatives refer to
-[this issue](https://github.com/request/request/issues/3142).
+A modernized, maintained fork of the popular [request](https://github.com/request/request) library (deprecated Feb 2020). Drop-in replacement with updated dependencies, zero known vulnerabilities, and Node 14+ support.
 
-# Request - Simplified HTTP client
+## Why request-modern?
 
-[![npm package](https://nodei.co/npm/request.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/request/)
+The original `request` package was deprecated in 2020 and has accumulated multiple security vulnerabilities in its dependencies. `request-modern` is a drop-in replacement that:
 
-[![Build status](https://img.shields.io/travis/request/request/master.svg?style=flat-square)](https://travis-ci.org/request/request)
-[![Coverage](https://img.shields.io/codecov/c/github/request/request.svg?style=flat-square)](https://codecov.io/github/request/request?branch=master)
-[![Coverage](https://img.shields.io/coveralls/request/request.svg?style=flat-square)](https://coveralls.io/r/request/request)
-[![Dependency Status](https://img.shields.io/david/request/request.svg?style=flat-square)](https://david-dm.org/request/request)
-[![Known Vulnerabilities](https://snyk.io/test/npm/request/badge.svg?style=flat-square)](https://snyk.io/test/npm/request)
-[![Gitter](https://img.shields.io/badge/gitter-join_chat-blue.svg?style=flat-square)](https://gitter.im/request/request?utm_source=badge)
+- Updates all dependencies to their latest secure versions
+- Removes deprecated packages (`safe-buffer`, `performance-now`)
+- Fixes all known security vulnerabilities (0 in npm audit)
+- Requires Node.js >= 14 (uses native APIs where possible)
+- Maintains full API compatibility with `request`
 
+## Install
+
+```bash
+npm install request-modern
+```
 
 ## Super simple to use
 
-Request is designed to be the simplest way possible to make http calls. It supports HTTPS and follows redirects by default.
+request-modern is designed to be the simplest way possible to make http calls. It supports HTTPS and follows redirects by default.
 
 ```js
-const request = require('request');
+const request = require('request-modern');
 request('http://www.google.com', function (error, response, body) {
-  console.error('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML for the Google homepage.
+  console.error('error:', error);
+  console.log('statusCode:', response && response.statusCode);
+  console.log('body:', body);
 });
 ```
+
+## Migrating from request
+
+```bash
+npm uninstall request
+npm install request-modern
+```
+
+Then update your imports:
+
+```js
+// Before
+const request = require('request');
+
+// After
+const request = require('request-modern');
+```
+
+The API is fully compatible -- no other code changes needed.
 
 
 ## Table of contents

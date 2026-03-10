@@ -5,10 +5,8 @@ Please search open/closed issues before submitting since someone might have aske
 
 If you have a support request or question please submit them to one of this resources:
 
-* Stack Overflow: http://stackoverflow.com/questions/tagged/request+node.js using the tags `node.js` & `request`
-* Gitter community: https://gitter.im/request/request?utm_source=newissue
 * Also have a look at the Readme for more information on how to get support:
-  https://github.com/request/request/blob/master/README.md
+  https://github.com/sabaoongfx/request-modern/blob/master/README.md
 
 Issues on GitHub are only related to problems of request itself and we cannot answer
 support questions here.
@@ -50,7 +48,7 @@ request({
 
 | software         | version
 | ---------------- | -------
-| request          |
+| request-modern   |
 | node             |
 | npm              |
 | Operating System |

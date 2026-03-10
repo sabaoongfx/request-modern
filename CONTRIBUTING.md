@@ -1,16 +1,16 @@
 
-# Contributing to Request
+# Contributing to request-modern
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to Request and its packages, which are hosted in the [Request Organization](https://github.com/request) on GitHub.
+The following is a set of guidelines for contributing to request-modern, which is hosted at [sabaoongfx/request-modern](https://github.com/sabaoongfx/request-modern) on GitHub.
 These are just guidelines, not rules, use your best judgment and feel free to propose changes to this document in a pull request.
 
 
 ## Submitting an Issue
 
 1. Provide a small self **sufficient** code example to **reproduce** the issue.
-2. Run your test code using [request-debug](https://github.com/request/request-debug) and copy/paste the results inside the issue.
+2. Run your test code and copy/paste the results inside the issue.
 3. You should **always** use fenced code blocks when submitting code examples or any other formatted output:
   <pre>
   ```js
@@ -32,7 +32,7 @@ If the problem is not related to request the issue will be marked as `Help (plea
 
 1. In almost all of the cases your PR **needs tests**. Make sure you have any.
 2. Run `npm test` locally. Fix any errors before pushing to GitHub.
-3. After submitting the PR a build will be triggered on TravisCI. Wait for it to ends and make sure all jobs are passing.
+3. After submitting the PR a build will be triggered on CI. Wait for it to end and make sure all jobs are passing.
 
 
 -----------------------------------------
@@ -63,8 +63,7 @@ There are a few basic ground-rules for contributors:
 1. Run `npm test` locally before submitting your PR, to catch any easy to miss
    style & testing issues.  To diagnose test failures, there are two ways to
    run a single test file:
-     - `node_modules/.bin/taper tests/test-file.js` - run using the default
-       [`taper`](https://github.com/nylen/taper) test reporter.
+     - `npx tape tests/test-file.js` - run using tape.
      - `node tests/test-file.js` - view the raw
        [tap](https://testanything.org/) output.
 

@@ -94,7 +94,7 @@ A more detailed example:
 var fs = require('fs')
   , path = require('path')
   , http = require('http')
-  , request = require('request')
+  , request = require('request-modern')
   , TMP_FILE_PATH = path.join(path.sep, 'tmp', 'foo')
 ;
 
