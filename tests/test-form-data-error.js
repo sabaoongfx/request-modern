@@ -1,10 +1,10 @@
 'use strict'
 
-var request = require('../index')
-var server = require('./server')
-var tape = require('tape')
+const request = require('../index')
+const server = require('./server')
+const tape = require('tape')
 
-var s = server.createServer()
+const s = server.createServer()
 
 tape('setup', function (t) {
   s.listen(0, function () {
@@ -45,7 +45,7 @@ tape('omit content-length header if the value is set to NaN', function (t) {
     })
   })
 
-  var sendStreamRequest = function (stream) {
+  const sendStreamRequest = function (stream) {
     request.post({
       uri: s.url + '/stream',
       formData: {
@@ -66,15 +66,23 @@ tape('omit content-length header if the value is set to NaN', function (t) {
 
 // TODO: remove this test after form-data@2.0 starts stringifying null values
 tape('form-data should throw on null value', function (t) {
-  t.throws(function () {
-    request({
+  let threw = false
+  try {
+    const r = request({
       method: 'POST',
       url: s.url,
       formData: {
         key: null
       }
     })
-  }, TypeError)
+    // If it didn't throw, abort the request and handle errors to prevent crash
+    r.on('error', function () {})
+    r.abort()
+  } catch (e) {
+    threw = true
+    t.ok(e instanceof TypeError, 'should throw TypeError')
+  }
+  t.ok(threw, 'should throw')
   t.end()
 })
 

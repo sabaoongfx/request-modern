@@ -1,11 +1,9 @@
 'use strict'
 
-var http = require('http')
-var request = require('../index')
-var tape = require('tape')
-var url = require('url')
-
-var s = http.createServer(function (req, res) {
+const http = require('http')
+const request = require('../index')
+const tape = require('tape')
+const s = http.createServer(function (req, res) {
   if (req.url === '/redirect/') {
     res.writeHead(302, {
       location: '/'
@@ -19,7 +17,7 @@ var s = http.createServer(function (req, res) {
 
 function addTest (baseUrl, uri, expected) {
   tape('test baseurl="' + baseUrl + '" uri="' + uri + '"', function (t) {
-    request(uri, { baseUrl: baseUrl }, function (err, resp, body) {
+    request(uri, { baseUrl }, function (err, resp, body) {
       t.equal(err, null)
       t.equal(body, 'ok')
       t.equal(resp.headers['x-path'], expected)
@@ -71,7 +69,7 @@ tape('baseUrl', function (t) {
 })
 
 tape('baseUrl defaults', function (t) {
-  var withDefaults = request.defaults({
+  const withDefaults = request.defaults({
     baseUrl: s.url
   })
   withDefaults('resource', function (err, resp, body) {
@@ -94,7 +92,7 @@ tape('baseUrl and redirects', function (t) {
 
 tape('error when baseUrl is not a String', function (t) {
   request('resource', {
-    baseUrl: url.parse(s.url + '/path')
+    baseUrl: new URL(s.url + '/path')
   }, function (err, resp, body) {
     t.notEqual(err, null)
     t.equal(err.message, 'options.baseUrl must be a string')
@@ -103,7 +101,7 @@ tape('error when baseUrl is not a String', function (t) {
 })
 
 tape('error when uri is not a String', function (t) {
-  request(url.parse('resource'), {
+  request(new URL('resource', 'http://localhost'), {
     baseUrl: s.url + '/path'
   }, function (err, resp, body) {
     t.notEqual(err, null)

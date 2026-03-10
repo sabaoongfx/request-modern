@@ -1,16 +1,16 @@
 'use strict'
 
-var server = require('./server')
-var assert = require('assert')
-var request = require('../index')
-var tape = require('tape')
-var http = require('http')
-var destroyable = require('server-destroy')
+const server = require('./server')
+const assert = require('assert')
+const request = require('../index')
+const tape = require('tape')
+const http = require('http')
+const destroyable = require('server-destroy')
 
-var s = server.createServer()
-var ss = server.createSSLServer()
-var hits = {}
-var jar = request.jar()
+const s = server.createServer()
+const ss = server.createSSLServer()
+let hits = {}
+const jar = request.jar()
 
 destroyable(s)
 destroyable(ss)
@@ -31,7 +31,7 @@ function createRedirectEndpoint (code, label, landing) {
   s.on('/' + label, function (req, res) {
     hits[label] = true
     res.writeHead(code, {
-      'location': s.url + '/' + landing,
+      location: s.url + '/' + landing,
       'set-cookie': 'ham=eggs'
     })
     res.end()
@@ -44,16 +44,16 @@ function createLandingEndpoint (landing) {
     // Make sure cookies are set properly after redirect
     assert.equal(req.headers.cookie, 'foo=bar; quux=baz; ham=eggs')
     hits[landing] = true
-    res.writeHead(200, {'x-response': req.method.toUpperCase() + ' ' + landing})
+    res.writeHead(200, { 'x-response': req.method.toUpperCase() + ' ' + landing })
     res.end(req.method.toUpperCase() + ' ' + landing)
   })
 }
 
 function bouncer (code, label, hops) {
-  var hop
-  var landing = label + '_landing'
-  var currentLabel
-  var currentLanding
+  let hop
+  const landing = label + '_landing'
+  let currentLabel
+  let currentLanding
 
   hops = hops || 1
 
@@ -90,7 +90,7 @@ tape('permanent bounce', function (t) {
   hits = {}
   request({
     uri: s.url + '/perm',
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -109,7 +109,7 @@ tape('preserve HEAD method when using followAllRedirects', function (t) {
     method: 'HEAD',
     uri: s.url + '/perm',
     followAllRedirects: true,
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -125,7 +125,7 @@ tape('temporary bounce', function (t) {
   hits = {}
   request({
     uri: s.url + '/temp',
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -141,7 +141,7 @@ tape('prevent bouncing', function (t) {
   hits = {}
   request({
     uri: s.url + '/nope',
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' },
     followRedirect: false
   }, function (err, res, body) {
@@ -157,7 +157,7 @@ tape('prevent bouncing', function (t) {
 tape('should not follow post redirects by default', function (t) {
   hits = {}
   request.post(s.url + '/temp', {
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -174,7 +174,7 @@ tape('should follow post redirects when followallredirects true', function (t) {
   request.post({
     uri: s.url + '/temp',
     followAllRedirects: true,
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -192,7 +192,7 @@ tape('should follow post redirects when followallredirects true and followOrigin
     uri: s.url + '/temp',
     followAllRedirects: true,
     followOriginalHttpMethod: true,
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -209,7 +209,7 @@ tape('should not follow post redirects when followallredirects false', function 
   request.post({
     uri: s.url + '/temp',
     followAllRedirects: false,
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -224,7 +224,7 @@ tape('should not follow post redirects when followallredirects false', function 
 tape('should not follow delete redirects by default', function (t) {
   hits = {}
   request.del(s.url + '/temp', {
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -240,7 +240,7 @@ tape('should not follow delete redirects even if followredirect is set to true',
   hits = {}
   request.del(s.url + '/temp', {
     followRedirect: true,
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -256,7 +256,7 @@ tape('should follow delete redirects when followallredirects true', function (t)
   hits = {}
   request.del(s.url + '/temp', {
     followAllRedirects: true,
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -272,7 +272,7 @@ tape('should follow 307 delete redirects when followallredirects true', function
   hits = {}
   request.del(s.url + '/fwd', {
     followAllRedirects: true,
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -288,7 +288,7 @@ tape('double bounce', function (t) {
   hits = {}
   request({
     uri: s.url + '/double',
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
     t.equal(err, null)
@@ -309,7 +309,7 @@ tape('double bounce terminated after first redirect', function (t) {
   hits = {}
   request({
     uri: s.url + '/double',
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' },
     followRedirect: filterDouble
   }, function (err, res, body) {
@@ -329,7 +329,7 @@ tape('triple bounce terminated after second redirect', function (t) {
   hits = {}
   request({
     uri: s.url + '/treble',
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' },
     followRedirect: filterTreble
   }, function (err, res, body) {
@@ -344,7 +344,7 @@ tape('triple bounce terminated after second redirect', function (t) {
 tape('http to https redirect', function (t) {
   hits = {}
   request.get({
-    uri: require('url').parse(s.url + '/ssl'),
+    uri: new URL(s.url + '/ssl'),
     rejectUnauthorized: false
   }, function (err, res, body) {
     t.equal(err, null)
@@ -357,7 +357,7 @@ tape('http to https redirect', function (t) {
 tape('should have referer header by default when following redirect', function (t) {
   request.post({
     uri: s.url + '/temp',
-    jar: jar,
+    jar,
     followAllRedirects: true,
     headers: { cookie: 'foo=bar' }
   }, function (err, res, body) {
@@ -365,15 +365,15 @@ tape('should have referer header by default when following redirect', function (
     t.equal(res.statusCode, 200)
     t.end()
   })
-  .on('redirect', function () {
-    t.equal(this.headers.referer, s.url + '/temp')
-  })
+    .on('redirect', function () {
+      t.equal(this.headers.referer, s.url + '/temp')
+    })
 })
 
 tape('should not have referer header when removeRefererHeader is true', function (t) {
   request.post({
     uri: s.url + '/temp',
-    jar: jar,
+    jar,
     followAllRedirects: true,
     removeRefererHeader: true,
     headers: { cookie: 'foo=bar' }
@@ -382,15 +382,15 @@ tape('should not have referer header when removeRefererHeader is true', function
     t.equal(res.statusCode, 200)
     t.end()
   })
-  .on('redirect', function () {
-    t.equal(this.headers.referer, undefined)
-  })
+    .on('redirect', function () {
+      t.equal(this.headers.referer, undefined)
+    })
 })
 
 tape('should preserve referer header set in the initial request when removeRefererHeader is true', function (t) {
   request.post({
     uri: s.url + '/temp',
-    jar: jar,
+    jar,
     followAllRedirects: true,
     removeRefererHeader: true,
     headers: { cookie: 'foo=bar', referer: 'http://awesome.com' }
@@ -399,21 +399,19 @@ tape('should preserve referer header set in the initial request when removeRefer
     t.equal(res.statusCode, 200)
     t.end()
   })
-  .on('redirect', function () {
-    t.equal(this.headers.referer, 'http://awesome.com')
-  })
+    .on('redirect', function () {
+      t.equal(this.headers.referer, 'http://awesome.com')
+    })
 })
 
 tape('should use same agent class on redirect', function (t) {
-  var agent
-  var calls = 0
-  var agentOptions = {}
+  let agent
+  let calls = 0
+  const agentOptions = {}
 
   function FakeAgent (agentOptions) {
-    var createConnection
-
     agent = new http.Agent(agentOptions)
-    createConnection = agent.createConnection
+    const createConnection = agent.createConnection
     agent.createConnection = function () {
       calls++
       return createConnection.apply(agent, arguments)
@@ -425,9 +423,9 @@ tape('should use same agent class on redirect', function (t) {
   hits = {}
   request.get({
     uri: s.url + '/temp',
-    jar: jar,
+    jar,
     headers: { cookie: 'foo=bar' },
-    agentOptions: agentOptions,
+    agentOptions,
     agentClass: FakeAgent
   }, function (err, res, body) {
     t.equal(err, null)
