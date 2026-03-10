@@ -1,5 +1,23 @@
 ## Change Log
 
+### v3.0.0 (2026/03/10)
+- Forked from [request](https://github.com/request/request) as `request-modern`
+- Updated all dependencies to latest secure versions
+- Removed `performance-now` in favor of native `performance.now()`
+- Removed `safe-buffer` in favor of native `Buffer` (Node 14+)
+- Updated `uuid` 3.x → 11.x with new import syntax
+- Updated `tough-cookie` 2.x → 5.x
+- Updated `qs` 6.5 → 6.15
+- Updated `form-data` 2.x → 4.x
+- Updated `http-signature` 1.2 → 1.4
+- Removed vulnerable dev dependencies (`taper`, `browserify`, `karma`, `phantomjs`)
+- Bumped minimum Node.js version to 14
+- 0 vulnerabilities in npm audit
+
+---
+
+*Below is the changelog from the original [request](https://github.com/request/request) package:*
+
 ### v2.88.0 (2018/08/10)
 - [#2996](https://github.com/request/request/pull/2996) fix(uuid): import versioned uuid (@kwonoj)
 - [#2994](https://github.com/request/request/pull/2994) Update to oauth-sign 0.9.0 (@dlecocq)
