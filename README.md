@@ -1,7 +1,7 @@
 # request-modern - Simplified HTTP client
 
-[![npm version](https://img.shields.io/npm/v/request-modern.svg?style=flat-square)](https://www.npmjs.com/package/@sabaoongfx/request-modern)
-[![npm downloads](https://img.shields.io/npm/dm/request-modern.svg?style=flat-square)](https://www.npmjs.com/package/@sabaoongfx/request-modern)
+[![npm version](https://img.shields.io/npm/v/@sabaoongfx/request-modern.svg?style=flat-square)](https://www.npmjs.com/package/@sabaoongfx/request-modern)
+[![npm downloads](https://img.shields.io/npm/dm/@sabaoongfx/request-modern.svg?style=flat-square)](https://www.npmjs.com/package/@sabaoongfx/request-modern)
 
 A modernized, maintained fork of the popular [request](https://github.com/request/request) library (deprecated Feb 2020). Drop-in replacement with updated dependencies, zero known vulnerabilities, and Node 14+ support.
 
