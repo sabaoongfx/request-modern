@@ -18,7 +18,7 @@ The original `request` package was deprecated in 2020 and has accumulated multip
 ## Install
 
 ```bash
-npm install request-modern
+npm install @sabaoongfx/request-modern
 ```
 
 ## Super simple to use
@@ -26,7 +26,7 @@ npm install request-modern
 request-modern is designed to be the simplest way possible to make http calls. It supports HTTPS and follows redirects by default.
 
 ```js
-const request = require('request-modern');
+const request = require('@sabaoongfx/request-modern');
 request('http://www.google.com', function (error, response, body) {
   console.error('error:', error);
   console.log('statusCode:', response && response.statusCode);
@@ -38,7 +38,7 @@ request('http://www.google.com', function (error, response, body) {
 
 ```bash
 npm uninstall request
-npm install request-modern
+npm install @sabaoongfx/request-modern
 ```
 
 Then update your imports:
@@ -48,7 +48,7 @@ Then update your imports:
 const request = require('request');
 
 // After
-const request = require('request-modern');
+const request = require('@sabaoongfx/request-modern');
 ```
 
 The API is fully compatible -- no other code changes needed.
